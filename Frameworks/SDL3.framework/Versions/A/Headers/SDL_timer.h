@@ -25,20 +25,7 @@
 /**
  * # CategoryTimer
  *
- * SDL provides time management functionality. It is useful for dealing with
- * (usually) small durations of time.
- *
- * This is not to be confused with _calendar time_ management, which is
- * provided by [CategoryTime](CategoryTime).
- *
- * This category covers measuring time elapsed (SDL_GetTicks(),
- * SDL_GetPerformanceCounter()), putting a thread to sleep for a certain
- * amount of time (SDL_Delay(), SDL_DelayNS(), SDL_DelayPrecise()), and firing
- * a callback function after a certain amount of time has elasped
- * (SDL_AddTimer(), etc).
- *
- * There are also useful macros to convert between time units, like
- * SDL_SECONDS_TO_NS() and such.
+ * SDL time management routines.
  */
 
 #include <SDL3/SDL_stdinc.h>
@@ -57,7 +44,7 @@ extern "C" {
  *
  * This is always 1000.
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_MS_PER_SECOND   1000
 
@@ -66,7 +53,7 @@ extern "C" {
  *
  * This is always 1000000.
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_US_PER_SECOND   1000000
 
@@ -75,7 +62,7 @@ extern "C" {
  *
  * This is always 1000000000.
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_NS_PER_SECOND   1000000000LL
 
@@ -84,7 +71,7 @@ extern "C" {
  *
  * This is always 1000000.
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_NS_PER_MS       1000000
 
@@ -93,7 +80,7 @@ extern "C" {
  *
  * This is always 1000.
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_NS_PER_US       1000
 
@@ -107,7 +94,7 @@ extern "C" {
  *
  * \threadsafety It is safe to call this macro from any thread.
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_SECONDS_TO_NS(S)    (((Uint64)(S)) * SDL_NS_PER_SECOND)
 
@@ -122,7 +109,7 @@ extern "C" {
  *
  * \threadsafety It is safe to call this macro from any thread.
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_NS_TO_SECONDS(NS)   ((NS) / SDL_NS_PER_SECOND)
 
@@ -136,7 +123,7 @@ extern "C" {
  *
  * \threadsafety It is safe to call this macro from any thread.
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_MS_TO_NS(MS)        (((Uint64)(MS)) * SDL_NS_PER_MS)
 
@@ -151,7 +138,7 @@ extern "C" {
  *
  * \threadsafety It is safe to call this macro from any thread.
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_NS_TO_MS(NS)        ((NS) / SDL_NS_PER_MS)
 
@@ -165,7 +152,7 @@ extern "C" {
  *
  * \threadsafety It is safe to call this macro from any thread.
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_US_TO_NS(US)        (((Uint64)(US)) * SDL_NS_PER_US)
 
@@ -180,7 +167,7 @@ extern "C" {
  *
  * \threadsafety It is safe to call this macro from any thread.
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_NS_TO_US(NS)        ((NS) / SDL_NS_PER_US)
 
@@ -192,7 +179,7 @@ extern "C" {
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  */
 extern SDL_DECLSPEC Uint64 SDLCALL SDL_GetTicks(void);
 
@@ -204,7 +191,7 @@ extern SDL_DECLSPEC Uint64 SDLCALL SDL_GetTicks(void);
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  */
 extern SDL_DECLSPEC Uint64 SDLCALL SDL_GetTicksNS(void);
 
@@ -221,7 +208,7 @@ extern SDL_DECLSPEC Uint64 SDLCALL SDL_GetTicksNS(void);
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetPerformanceFrequency
  */
@@ -234,7 +221,7 @@ extern SDL_DECLSPEC Uint64 SDLCALL SDL_GetPerformanceCounter(void);
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetPerformanceCounter
  */
@@ -251,10 +238,7 @@ extern SDL_DECLSPEC Uint64 SDLCALL SDL_GetPerformanceFrequency(void);
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
- *
- * \sa SDL_DelayNS
- * \sa SDL_DelayPrecise
+ * \since This function is available since SDL 3.1.3.
  */
 extern SDL_DECLSPEC void SDLCALL SDL_Delay(Uint32 ms);
 
@@ -269,10 +253,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_Delay(Uint32 ms);
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
- *
- * \sa SDL_Delay
- * \sa SDL_DelayPrecise
+ * \since This function is available since SDL 3.1.3.
  */
 extern SDL_DECLSPEC void SDLCALL SDL_DelayNS(Uint64 ns);
 
@@ -287,17 +268,14 @@ extern SDL_DECLSPEC void SDLCALL SDL_DelayNS(Uint64 ns);
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
- *
- * \sa SDL_Delay
- * \sa SDL_DelayNS
+ * \since This function is available since SDL 3.1.6.
  */
 extern SDL_DECLSPEC void SDLCALL SDL_DelayPrecise(Uint64 ns);
 
 /**
  * Definition of the timer ID type.
  *
- * \since This datatype is available since SDL 3.2.0.
+ * \since This datatype is available since SDL 3.1.3.
  */
 typedef Uint32 SDL_TimerID;
 
@@ -321,7 +299,7 @@ typedef Uint32 SDL_TimerID;
  *               thread; the application is responsible for locking resources
  *               the callback touches that need to be protected.
  *
- * \since This datatype is available since SDL 3.2.0.
+ * \since This datatype is available since SDL 3.1.3.
  *
  * \sa SDL_AddTimer
  */
@@ -356,7 +334,7 @@ typedef Uint32 (SDLCALL *SDL_TimerCallback)(void *userdata, SDL_TimerID timerID,
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_AddTimerNS
  * \sa SDL_RemoveTimer
@@ -383,7 +361,7 @@ extern SDL_DECLSPEC SDL_TimerID SDLCALL SDL_AddTimer(Uint32 interval, SDL_TimerC
  *               thread; the application is responsible for locking resources
  *               the callback touches that need to be protected.
  *
- * \since This datatype is available since SDL 3.2.0.
+ * \since This datatype is available since SDL 3.1.3.
  *
  * \sa SDL_AddTimerNS
  */
@@ -418,7 +396,7 @@ typedef Uint64 (SDLCALL *SDL_NSTimerCallback)(void *userdata, SDL_TimerID timerI
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_AddTimer
  * \sa SDL_RemoveTimer
@@ -434,7 +412,7 @@ extern SDL_DECLSPEC SDL_TimerID SDLCALL SDL_AddTimerNS(Uint64 interval, SDL_NSTi
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_AddTimer
  */

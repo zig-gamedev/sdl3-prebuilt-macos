@@ -25,19 +25,7 @@
 /**
  * # CategoryMutex
  *
- * SDL offers several thread synchronization primitives. This document can't
- * cover the complicated topic of thread safety, but reading up on what each
- * of these primitives are, why they are useful, and how to correctly use them
- * is vital to writing correct and safe multithreaded programs.
- *
- * - Mutexes: SDL_CreateMutex()
- * - Read/Write locks: SDL_CreateRWLock()
- * - Semaphores: SDL_CreateSemaphore()
- * - Condition variables: SDL_CreateCondition()
- *
- * SDL also offers a datatype, SDL_InitState, which can be used to make sure
- * only one thread initializes/deinitializes some resource that several
- * threads might try to use for the first time simultaneously.
+ * Functions to provide thread synchronization primitives.
  */
 
 #include <SDL3/SDL_stdinc.h>
@@ -72,7 +60,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_CAPABILITY(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(capability(x))
@@ -82,7 +70,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_SCOPED_CAPABILITY \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(scoped_lockable)
@@ -92,7 +80,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_GUARDED_BY(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
@@ -102,7 +90,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_PT_GUARDED_BY(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(pt_guarded_by(x))
@@ -112,7 +100,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_ACQUIRED_BEFORE(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(acquired_before(x))
@@ -122,7 +110,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_ACQUIRED_AFTER(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(acquired_after(x))
@@ -132,7 +120,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_REQUIRES(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(requires_capability(x))
@@ -142,7 +130,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_REQUIRES_SHARED(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(requires_shared_capability(x))
@@ -152,7 +140,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_ACQUIRE(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(acquire_capability(x))
@@ -162,7 +150,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_ACQUIRE_SHARED(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(acquire_shared_capability(x))
@@ -172,7 +160,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_RELEASE(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(release_capability(x))
@@ -182,7 +170,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_RELEASE_SHARED(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(release_shared_capability(x))
@@ -192,7 +180,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_RELEASE_GENERIC(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(release_generic_capability(x))
@@ -202,7 +190,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_TRY_ACQUIRE(x, y) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(try_acquire_capability(x, y))
@@ -212,7 +200,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_TRY_ACQUIRE_SHARED(x, y) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(try_acquire_shared_capability(x, y))
@@ -222,7 +210,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_EXCLUDES(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(locks_excluded(x))
@@ -232,7 +220,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_ASSERT_CAPABILITY(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(assert_capability(x))
@@ -242,7 +230,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_ASSERT_SHARED_CAPABILITY(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(assert_shared_capability(x))
@@ -252,7 +240,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_RETURN_CAPABILITY(x) \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(lock_returned(x))
@@ -262,7 +250,7 @@
  *
  * Please see https://clang.llvm.org/docs/ThreadSafetyAnalysis.html#mutex-h
  *
- * \since This macro is available since SDL 3.2.0.
+ * \since This macro is available since SDL 3.1.3.
  */
 #define SDL_NO_THREAD_SAFETY_ANALYSIS \
   SDL_THREAD_ANNOTATION_ATTRIBUTE__(no_thread_safety_analysis)
@@ -291,7 +279,7 @@ extern "C" {
  *
  * https://en.wikipedia.org/wiki/Mutex
  *
- * \since This struct is available since SDL 3.2.0.
+ * \since This struct is available since SDL 3.1.3.
  */
 typedef struct SDL_Mutex SDL_Mutex;
 
@@ -308,7 +296,7 @@ typedef struct SDL_Mutex SDL_Mutex;
  * \returns the initialized and unlocked mutex or NULL on failure; call
  *          SDL_GetError() for more information.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_DestroyMutex
  * \sa SDL_LockMutex
@@ -334,7 +322,7 @@ extern SDL_DECLSPEC SDL_Mutex * SDLCALL SDL_CreateMutex(void);
  *
  * \param mutex the mutex to lock.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_TryLockMutex
  * \sa SDL_UnlockMutex
@@ -355,7 +343,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_LockMutex(SDL_Mutex *mutex) SDL_ACQUIRE(mut
  * \param mutex the mutex to try to lock.
  * \returns true on success, false if the mutex would block.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_LockMutex
  * \sa SDL_UnlockMutex
@@ -374,7 +362,7 @@ extern SDL_DECLSPEC bool SDLCALL SDL_TryLockMutex(SDL_Mutex *mutex) SDL_TRY_ACQU
  *
  * \param mutex the mutex to unlock.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_LockMutex
  * \sa SDL_TryLockMutex
@@ -392,7 +380,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_UnlockMutex(SDL_Mutex *mutex) SDL_RELEASE(m
  *
  * \param mutex the mutex to destroy.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_CreateMutex
  */
@@ -422,7 +410,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_DestroyMutex(SDL_Mutex *mutex);
  * about how threads are scheduled and when they can be recursively locked.
  * These are documented in the other rwlock functions.
  *
- * \since This struct is available since SDL 3.2.0.
+ * \since This struct is available since SDL 3.1.3.
  */
 typedef struct SDL_RWLock SDL_RWLock;
 
@@ -457,7 +445,7 @@ typedef struct SDL_RWLock SDL_RWLock;
  * \returns the initialized and unlocked read/write lock or NULL on failure;
  *          call SDL_GetError() for more information.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_DestroyRWLock
  * \sa SDL_LockRWLockForReading
@@ -497,7 +485,7 @@ extern SDL_DECLSPEC SDL_RWLock * SDLCALL SDL_CreateRWLock(void);
  *
  * \param rwlock the read/write lock to lock.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_LockRWLockForWriting
  * \sa SDL_TryLockRWLockForReading
@@ -528,7 +516,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_LockRWLockForReading(SDL_RWLock *rwlock) SD
  *
  * \param rwlock the read/write lock to lock.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_LockRWLockForReading
  * \sa SDL_TryLockRWLockForWriting
@@ -553,7 +541,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_LockRWLockForWriting(SDL_RWLock *rwlock) SD
  * \param rwlock the rwlock to try to lock.
  * \returns true on success, false if the lock would block.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_LockRWLockForReading
  * \sa SDL_TryLockRWLockForWriting
@@ -583,7 +571,7 @@ extern SDL_DECLSPEC bool SDLCALL SDL_TryLockRWLockForReading(SDL_RWLock *rwlock)
  * \param rwlock the rwlock to try to lock.
  * \returns true on success, false if the lock would block.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_LockRWLockForWriting
  * \sa SDL_TryLockRWLockForReading
@@ -607,7 +595,7 @@ extern SDL_DECLSPEC bool SDLCALL SDL_TryLockRWLockForWriting(SDL_RWLock *rwlock)
  *
  * \param rwlock the rwlock to unlock.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_LockRWLockForReading
  * \sa SDL_LockRWLockForWriting
@@ -627,7 +615,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_UnlockRWLock(SDL_RWLock *rwlock) SDL_RELEAS
  *
  * \param rwlock the rwlock to destroy.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_CreateRWLock
  */
@@ -653,7 +641,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_DestroyRWLock(SDL_RWLock *rwlock);
  *
  * https://en.wikipedia.org/wiki/Semaphore_(programming)
  *
- * \since This struct is available since SDL 3.2.0.
+ * \since This struct is available since SDL 3.1.3.
  */
 typedef struct SDL_Semaphore SDL_Semaphore;
 
@@ -670,7 +658,7 @@ typedef struct SDL_Semaphore SDL_Semaphore;
  * \returns a new semaphore or NULL on failure; call SDL_GetError() for more
  *          information.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_DestroySemaphore
  * \sa SDL_SignalSemaphore
@@ -689,7 +677,7 @@ extern SDL_DECLSPEC SDL_Semaphore * SDLCALL SDL_CreateSemaphore(Uint32 initial_v
  *
  * \param sem the semaphore to destroy.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_CreateSemaphore
  */
@@ -707,7 +695,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_DestroySemaphore(SDL_Semaphore *sem);
  *
  * \param sem the semaphore wait on.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SignalSemaphore
  * \sa SDL_TryWaitSemaphore
@@ -726,7 +714,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_WaitSemaphore(SDL_Semaphore *sem);
  * \param sem the semaphore to wait on.
  * \returns true if the wait succeeds, false if the wait would block.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SignalSemaphore
  * \sa SDL_WaitSemaphore
@@ -746,7 +734,7 @@ extern SDL_DECLSPEC bool SDLCALL SDL_TryWaitSemaphore(SDL_Semaphore *sem);
  *                  indefinitely.
  * \returns true if the wait succeeds or false if the wait times out.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SignalSemaphore
  * \sa SDL_TryWaitSemaphore
@@ -759,7 +747,7 @@ extern SDL_DECLSPEC bool SDLCALL SDL_WaitSemaphoreTimeout(SDL_Semaphore *sem, Si
  *
  * \param sem the semaphore to increment.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_TryWaitSemaphore
  * \sa SDL_WaitSemaphore
@@ -773,7 +761,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_SignalSemaphore(SDL_Semaphore *sem);
  * \param sem the semaphore to query.
  * \returns the current value of the semaphore.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  */
 extern SDL_DECLSPEC Uint32 SDLCALL SDL_GetSemaphoreValue(SDL_Semaphore *sem);
 
@@ -796,7 +784,7 @@ extern SDL_DECLSPEC Uint32 SDLCALL SDL_GetSemaphoreValue(SDL_Semaphore *sem);
  *
  * https://en.wikipedia.org/wiki/Condition_variable
  *
- * \since This struct is available since SDL 3.2.0.
+ * \since This struct is available since SDL 3.1.3.
  */
 typedef struct SDL_Condition SDL_Condition;
 
@@ -806,7 +794,7 @@ typedef struct SDL_Condition SDL_Condition;
  * \returns a new condition variable or NULL on failure; call SDL_GetError()
  *          for more information.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_BroadcastCondition
  * \sa SDL_SignalCondition
@@ -821,7 +809,7 @@ extern SDL_DECLSPEC SDL_Condition * SDLCALL SDL_CreateCondition(void);
  *
  * \param cond the condition variable to destroy.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_CreateCondition
  */
@@ -834,7 +822,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_DestroyCondition(SDL_Condition *cond);
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_BroadcastCondition
  * \sa SDL_WaitCondition
@@ -849,7 +837,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_SignalCondition(SDL_Condition *cond);
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SignalCondition
  * \sa SDL_WaitCondition
@@ -877,7 +865,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_BroadcastCondition(SDL_Condition *cond);
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_BroadcastCondition
  * \sa SDL_SignalCondition
@@ -907,7 +895,7 @@ extern SDL_DECLSPEC void SDLCALL SDL_WaitCondition(SDL_Condition *cond, SDL_Mute
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_BroadcastCondition
  * \sa SDL_SignalCondition
@@ -926,7 +914,7 @@ extern SDL_DECLSPEC bool SDLCALL SDL_WaitConditionTimeout(SDL_Condition *cond,
 /**
  * The current status of an SDL_InitState structure.
  *
- * \since This enum is available since SDL 3.2.0.
+ * \since This enum is available since SDL 3.1.3.
  */
 typedef enum SDL_InitStatus
 {
@@ -975,7 +963,7 @@ typedef enum SDL_InitStatus
  *    {
  *        if (!SDL_ShouldQuit(&init)) {
  *            // The system is not initialized
- *            return;
+ *            return true;
  *        }
  *
  *        // At this point, you should not leave this function without calling SDL_SetInitialized()
@@ -990,7 +978,7 @@ typedef enum SDL_InitStatus
  * should use other mechanisms to protect those, if that's a concern for your
  * code.
  *
- * \since This struct is available since SDL 3.2.0.
+ * \since This struct is available since SDL 3.1.3.
  */
 typedef struct SDL_InitState
 {
@@ -1015,7 +1003,7 @@ typedef struct SDL_InitState
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetInitialized
  * \sa SDL_ShouldQuit
@@ -1036,7 +1024,7 @@ extern SDL_DECLSPEC bool SDLCALL SDL_ShouldInit(SDL_InitState *state);
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetInitialized
  * \sa SDL_ShouldInit
@@ -1055,7 +1043,7 @@ extern SDL_DECLSPEC bool SDLCALL SDL_ShouldQuit(SDL_InitState *state);
  *
  * \threadsafety It is safe to call this function from any thread.
  *
- * \since This function is available since SDL 3.2.0.
+ * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_ShouldInit
  * \sa SDL_ShouldQuit
